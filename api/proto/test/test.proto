@@ -1,5 +1,7 @@
 syntax = "proto3";
+
 package test.v1;
+
 option go_package = "github.com/kupr666/Pocker-Web/gen/go/test/v1;testv1";
 
 service GreetingService{
