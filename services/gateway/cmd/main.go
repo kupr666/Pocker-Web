@@ -18,12 +18,11 @@ func main() {
 	}
 	defer conn.Close()
 
-	gateway := lobby.NewGatewayServer(
-		tablesv1.NewLobbyServiceClient(conn),
-	)
+	lobbyClient := tablesv1.NewLobbyServiceClient(conn)
+	gatewayHandler := lobby.NewGatewayServer(lobbyClient)
 
 	mux := http.NewServeMux()
-	mux.HandleFunc("POST /api/v1/tables", gateway.CreateTables)
+	mux.HandleFunc("POST /api/v1/tables", gatewayHandler.CreateTables)
 	log.Println("Gateway listening at 127.0.0.1:8080")
 	log.Fatal(http.ListenAndServe("127.0.0.1:8080", mux))
 }

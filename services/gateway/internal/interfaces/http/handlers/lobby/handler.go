@@ -26,7 +26,12 @@ func (g *GatewayServer) CreateTables(w http.ResponseWriter, r *http.Request) {
 	// validation with validator lib
 
 	// call lobby client through grpc
-	response, err := g.lobby.CreateTable(r.Context(), &tablesv1.CreateTableRequest{})
+	response, err := g.lobby.CreateTable(r.Context(), &tablesv1.CreateTableRequest{
+		Name:        req.Name,
+		OwnerUserId: "12",
+		RequestId:   r.Header.Get("Idempotency-Key"),
+		AccessMode:  tablesv1.AccessMode_ACCESS_MODE_PUBLIC,
+	})
 	if err != nil {
 		httputil.SendGRPCError(w, err)
 		return

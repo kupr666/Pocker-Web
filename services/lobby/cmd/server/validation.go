@@ -12,7 +12,7 @@ func validateCreateTableRequest(req *v1.CreateTableRequest) error {
 		return errors.New("req is required")
 	}
 	if strings.TrimSpace(req.GetName()) == "" {
-		return errors.New("name is required")
+		return errors.New("рname is required")
 	}
 	if req.GetOwnerUserId() == "" {
 		return errors.New("owner user is required")
