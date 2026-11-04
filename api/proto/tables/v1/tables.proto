@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package tables.v1;
+
+import "google/protobuf/timestamp.proto";
+import "tables/v1/rules.proto";
+
+option go_package = "github.com/kupr666/Pocker-Web/gen/go/tables/v1";
+
+service LobbyService {
+  rpc CreateTable(CreateTableRequest) returns (CreateTableResponse);
+}
+
+message CreateTableRequest {
+  string          owner_user_id = 1;
+  string          request_id = 2;
+  string          name = 3;
+  AccessMode      access_mode = 4;
+  string          password = 5;
+  TableRulesInput rules = 6;
+}
+
+message CreateTableResponse {
+  Table table = 1;
+}
+
+message Table {
+  string                    table_id = 1;
+  string                    name = 2;
+  string                    owner_user_id = 3;
+  AccessMode                access_mode = 4;
+  table.v1.TableRules                rules = 5;
+  uint32                    occupied_seats = 6;
+  google.protobuf.Timestamp created_at = 7;
+}
+
+enum AccessMode {
+  // if gateway sent a request without ACCESS_MODE --> UNSPECIFIED
+  // (transform it into public in lobby)
+  ACCESS_MODE_UNSPECIFIED = 0;
+  ACCESS_MODE_PUBLIC = 1;
+  ACCESS_MODE_PASSWORD = 2;
+  ACCESS_MODE_INVITATION = 3;
+}
+
+message TableRulesInput {
+  optional uint32 max_seats = 1;
+  optional uint64 starting_stack = 2;
+  optional uint64 small_blind = 3;
+  optional uint64 big_blind = 4;
+  optional uint32 turn_timeout_seconds = 5;
+  table.v1.ReentryMode reentry_mode = 6;
+  table.v1.RebuyMode rebuy_mode = 7;
+  optional uint32 rebuy_limit = 8;
+}

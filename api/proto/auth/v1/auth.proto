@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package auth.v1;
+
+option go_package = "github.com/kupr666/Pocker-Web/gen/go/auth/v1";
+
+// Auth methods will be defined when the authentication contract is designed.

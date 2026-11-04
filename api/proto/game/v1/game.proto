@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package game.v1;
+
+import "tables/v1/rules.proto";
+
+option go_package = "github.com/kupr666/Pocker-Web/gen/go/game/v1";
+
+service GameService {
+  rpc CreateTableRuntime(CreateTableRuntimeRequest) returns (CreateTableRuntimeResponse);
+}
+
+message CreateTableRuntimeRequest {
+  // Lobby allocates the ID. A retry with the same ID must not create a duplicate.
+  string table_id = 1;
+  table.v1.TableRules rules = 2;
+}
+
+message CreateTableRuntimeResponse {
+  string table_id = 1;
+}

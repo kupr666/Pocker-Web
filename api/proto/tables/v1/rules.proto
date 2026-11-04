@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package table.v1;
+
+option go_package = "github.com/kupr666/Pocker-Web/gen/go/table/v1";
+
+message TableRules {
+  uint32 max_seats = 1;
+  uint64 starting_stack = 2;
+  uint64 small_blind = 3;
+  uint64 big_blind = 4;
+  uint32 turn_timeout_seconds = 5;
+  ReentryMode reentry_mode = 6;
+  RebuyMode rebuy_mode = 7;
+  uint32 rebuy_limit = 8;
+}
+
+// Rejoin the table
+enum ReentryMode {
+  REENTRY_MODE_UNSPECIFIED = 0;
+  REENTRY_MODE_PRESERVE_STACK = 1;
+  REENTRY_MODE_RESTORE_STARTING_STACK = 2;
+}
+
+// chip refill
+enum RebuyMode {
+  REBUY_MODE_UNSPECIFIED = 0;
+  REBUY_MODE_DISABLED = 1;
+  REBUY_MODE_PLAYER_REQUEST = 2;
+  REBUY_MODE_OWNER_APPROVAL = 3;
+}
