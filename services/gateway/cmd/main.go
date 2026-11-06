@@ -18,7 +18,9 @@ func main() {
 	}
 	defer conn.Close()
 
+	// sens grpc in Lobby
 	lobbyClient := tablesv1.NewLobbyServiceClient(conn)
+	// needed to accept http request and call client
 	gatewayHandler := lobby.NewGatewayServer(lobbyClient)
 
 	mux := http.NewServeMux()
